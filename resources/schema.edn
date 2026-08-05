@@ -694,6 +694,36 @@
                 :cg/DenaturingGradientGel
                 :cg/HomozygosityMapping
                 :cg/HighResolutionMelting]}
+ {:id :cg/InterpretationValueSet,
+  :type :skos/Collection,
+  :skos/member [:http://purl.obolibrary.org/obo/MI_0933
+                :http://purl.obolibrary.org/obo/MI_0935
+                :cg/GeneFunctionConsistentWithPhenotype
+                :cg/GeneFunctionSimilarToOtherKnownDiseaseCausingGene
+                :http://purl.obolibrary.org/obo/MI_0208
+                :cg/GeneAlteredInAffectedPatients
+                :http://purl.obolibrary.org/obo/MI_0915
+                :cg/GeneSpecificTreatmentRescuesPhenotype
+                :cg/ProteinAlterationDisruptsModelOrganism
+                :cg/GeneAlterationProducesDiseaseConsistentPhenotype
+                :cg/GeneExpressedInDiseaseRelevantTissues]}
+ {:id :cg/MethodValueSet
+  :type :skos/Collection
+  :skos/member [:cg/SingleVariantAnalysis
+                  :cg/AggregateVariantAnalysis
+                  :cg/CandidateGeneSequencing
+                  :cg/AllGenesSequencing]}
+ {:id :cg/ModelSystemValueSet,
+  :type :skos/Collection
+  :skos/member [:cg/NonPatientCells
+                :cg/PatientCells]}
+ {:id :cg/PhaseStatusConfidenceValueSet
+  :type :skos/Collection
+  :skos/member [:cg/ProvenInTrans
+                :cg/SuspectedInTrans]}
+ {:id :cg/DirectionValueSet,
+  :type :skos/Collection
+  :skos/member [:cg/Neutral :cg/Supports]}
  {:id :cg/Evaluated, :type :skos/Concept}
  {:id :cg/Approved, :type :skos/Concept}
  {:id :cg/Submitted, :type :skos/Concept}
@@ -734,9 +764,6 @@
  {:id :cg/NewCuration, :type :skos/Concept}
  {:id :cg/Neutral, :type :skos/Concept}
  {:id :cg/Supports, :type :skos/Concept}
- {:id :cg/DirectionValueSet,
-  :type :skos/Collection
-  :skos/member [:cg/Neutral :cg/Supports]}
  {:id :cg/Disputes, :type :skos/Concept}
  {:id :cg/Neutral, :type :skos/Concept}
  {:id :cg/Supports, :type :skos/Concept}
@@ -832,5 +859,23 @@
  {:id :cg/DenaturingGradientGel, :type :skos/Concept}
  {:id :cg/HomozygosityMapping, :type :skos/Concept}
  {:id :cg/HighResolutionMelting, :type :skos/Concept}
- 
+ {:id :http://purl.obolibrary.org/obo/MI_0933, :type :skos/Concept}
+ {:id :http://purl.obolibrary.org/obo/MI_0935, :type :skos/Concept}
+ {:id :cg/GeneFunctionConsistentWithPhenotype, :type :skos/Concept}
+ {:id :cg/GeneFunctionSimilarToOtherKnownDiseaseCausingGene, :type :skos/Concept}
+ {:id :http://purl.obolibrary.org/obo/MI_0208, :type :skos/Concept}
+ {:id :cg/GeneAlteredInAffectedPatients, :type :skos/Concept}
+ {:id :http://purl.obolibrary.org/obo/MI_0915, :type :skos/Concept}
+ {:id :cg/GeneSpecificTreatmentRescuesPhenotype, :type :skos/Concept}
+ {:id :cg/ProteinAlterationDisruptsModelOrganism, :type :skos/Concept}
+ {:id :cg/GeneAlterationProducesDiseaseConsistentPhenotype, :type :skos/Concept}
+ {:id :cg/GeneExpressedInDiseaseRelevantTissues, :type :skos/Concept}
+ {:id :cg/SingleVariantAnalysis, :type :skos/Concept}
+ {:id :cg/AggregateVariantAnalysis, :type :skos/Concept}
+ {:id :cg/CandidateGeneSequencing, :type :skos/Concept}
+ {:id :cg/AllGenesSequencing, :type :skos/Concept}
+ {:id :cg/NonPatientCells, :type :skos/Concept}
+ {:id :cg/PatientCells, :type :skos/Concept}
+ {:id :cg/ProvenInTrans, :type :skos/Concept}
+ {:id :cg/SuspectedInTrans, :type :skos/Concept}
  ]
