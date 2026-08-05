@@ -1,0 +1,809 @@
+[;; classes
+ {:id :cg/Statement,
+  :type :rdfs/Class
+  :reference :sepio/Statement
+  :required-attributes [:dc/isVersionOf
+                        :cg/contributions
+                        :cg/classification
+                        :cg/proposition
+                        :cg/specifiedBy
+                        :cg/score
+                        :cg/direction
+                        :cg/hasEvidenceLines
+                        :cg/version
+                        :dc/description]
+  :optional-attributes []
+  :internal-attributes [:cg/calculatedClassification
+                        :cg/GCISnapshot
+                        :cg/curationReasons
+                        :cg/sequence
+                        :cg/curationReasonDescription]}
+ {:id :cg/GeneFunctionStudyResult,
+  :type :rdfs/Class
+  :maturity :cg/Draft
+  :optional-attributes [:cg/modelSystem
+                        :cg/interpretation
+                        :rdfs/label
+                        :dc/source
+                        :dc/description]}
+ {:id :cg/GeneDiseaseValidityProposition,
+  :type :rdfs/Class
+  :maturity :cg/Draft
+  :required-attributes [:cg/predicate
+                        :cg/modeOfInheritanceQualifier
+                        :cg/objectCondition
+                        :cg/subjectGene]}
+ {:id :cg/CaseControlStudyResult,
+  :type :rdfs/Class
+  :maturity :cg/Draft
+  :interal-note "Examine values for alignment. Let's try to get everything here to draft if possible"
+  :attrbutes [:cg/pValue
+              :cg/supportingMethodTypes
+              :cg/caseCohort
+              :cg/lowerConfidenceLimit
+              :cg/upperConfidenceLimit
+              :cg/statisticalSignificanceValueType
+              :rdfs/label
+              :cg/statisticalSignificanceType
+              :dc/source
+              :cg/controlCohort
+              :cg/statisticalSignificanceValue
+              :dc/description]}
+ {:id :cg/VariantObservationStudyResult
+  :type :rdfs/Class
+  :maturity :cg/Draft
+  :attributes [:rdf/type
+               :cg/allele
+               :cg/variantObservedIn
+               :cg/alleleOrigin
+               :dc/source
+               :cg/zygosity
+               :cg/paternityMaternityConfirmed]}
+ {:id :cg/Family
+  :type :rdfs/Class
+  :maturity :cg/Draft
+  :attributes [:rdf/type
+               :cg/member
+               :cg/ethnicity
+               :rdfs/label
+               :cg/modeOfInheritance]}
+ {:id :cg/Cohort
+  :type :rdfs/Class
+  :maturity :cg/Volatile
+  :attributes [:rdf/type
+               :cg/numberGenotyped
+               :cg/numWithVariant
+               :cg/alleleFrequency
+               :cg/relatedCondition
+               :cg/hasEvidenceItems
+               :cg/detectionMethodText]}
+ {:id :cg/UnscoreableEvidence
+  :type :rdfs/Class
+  :maturity :cg/Internal
+  :attributes [:rdf/type
+               :dc/source
+               :dc/description]}
+ {:id :cg/EvidenceLine
+  :type :rdfs/Class
+  :reference :sepio/EvidenceLine
+  ;; check to see if attributes align with SEPIO
+  :attributes [:rdf/type
+               :cg/scoreOfEvidenceProvided
+               :cg/directionOfEvidenceProvided
+               :cg/hasEvidenceItems
+               :cg/calculatedScore
+               :cg/specifiedBy
+               :dc/description]}
+ {:id :cg/SegregationStudyResult
+  :type :rdfs/Class
+  :maturity :cg/Draft
+  :attributes [:rdf/type
+               :cg/LODScore
+               :cg/publishedLODScore
+               :cg/phenotypes
+               :cg/family
+               :cg/supportingMethodTypes
+               :cg/meetsInclusionCriteria
+               :rdfs/label
+               :cg/phenotypeNegativeAlleleNegative
+               :cg/phenotypePositiveAllelePositive
+               :dc/source
+               :cg/proband
+               :cg/phenotypeFreeText
+               :cg/estimatedLODScore
+               :dc/description]}
+ {:id :cg/VariationDescriptor
+  :type :rdfs/Class
+  :maturity :cg/Volatile
+  :note "The GA4GH used to have a similar concept. This was removed from the spec but has not yet been replaced by an equivalent term."
+  :attributes [:rdf/type
+               :skos/prefLabel
+               :cg/canonicalReference]}
+ {:id :cg/ProbandStudyResult
+  :type :rdfs/Class
+  :attributes [:rdf/type
+               :cg/ageType
+               :cg/hasVariant
+               :cg/phenotypes
+               :cg/genotypeConfirmationMethod
+               :cg/ethnicity
+               :cg/phaseStatusConfidence
+               :rdfs/label
+               :cg/geneticTestingMethod
+               :cg/previousTesting
+               :dc/source
+               :cg/phenotypeFreeText
+               :cg/sex
+               :cg/detectionMethodText
+               :cg/ageUnit
+               :cg/zygosity
+               :cg/ageValue
+               :cg/previousTestingDescription]}
+ {:id :cg/Contribution,
+  :type :rdfs/Class
+  :reference :sepio/Contribution
+  :attributes [:rdf/type
+               :cg/date
+               :cg/activityType
+               :cg/contributor]}
+ {:id :cg/VariantFunctionalImpactEvidence
+  :type :rdfs/Class
+  :maturity :cg/Volatile
+  :attributes [:rdf/type
+               :cg/functionalDataSupport
+               :dc/description]}
+ ;; properties
+ {:id :cg/GCISnapshot,
+  :type :rdf/Property
+  :maturity :cg/Internal
+  :range :String}
+ {:id :cg/activityType,
+  :type :rdf/Property
+  :reference :sepio/activityType
+  :range :skos/Concept
+  :value-set :cg/ActivityTypes}
+ {:id :cg/ageType
+  :type :rdf/Property
+  :maturity :cg/Volatile
+  :note "Age and duration units have yet to be aligned at GA4GH level; will adjust to conform to standard as it is developed."
+  :range :skos/Concept
+  :value-set :cg/IndividualAgeTypes}
+ {:id :cg/ageUnit
+  :type :rdf/Property
+  :maturity :cg/Volatile
+  :range :skos/Concept
+  :value-set :cg/IndividualAgeUnits
+  :note "Age and duration units have yet to be aligned at GA4GH level; will adjust to conform to standard as it is developed."}
+ {:id :cg/ageValue
+  :type :rdf/Property
+  :maturity :cg/Volatile
+  :range :Number
+  :note "Age and duration units have yet to be aligned at GA4GH level; will adjust to conform to standard as it is developed."}
+ {:id :cg/numberGenotyped
+  :type :rdf/Property
+  :maturity :cg/Draft
+  :range :Number}
+ {:id :cg/variant
+  :type :rdf/Property
+  :maturity :cg/Draft
+  :range :cg/VariationDescriptor
+  :internal-note "now tied only to VariantObservationStudyResult"}
+ {:id :cg/alleleFrequency,
+  :type :rdf/Property
+  :range :Number
+  :maturity :cg/Draft}
+ {:id :cg/variantOrigin
+  :type :rdf/Property
+  :range :skos/Concept
+  :value-set :cg/VariantOriginValueSet
+  :maturity :cg/Draft}
+ {:id :cg/calculatedClassification
+  :type :rdf/Property
+  :maturity :cg/Internal
+  :range :skos/Concept
+  :value-set :cg/ClassificationValueSet
+  :note "Classification calculated based on sum of scores. May be adjusted by curator."}
+ {:id :cg/calculatedScore,
+  :type :rdf/Property
+  :maturity :cg/Internal
+  :range :Number
+  :note "Automatic score for EvidenceLine. Adjusted score by curator used for final classification."}
+ {:id :cg/canonicalReference,
+  :type :rdf/Property
+  :maturity :cg/Volatile
+  :range :cg/Variation
+  :internal-note "only used as ID, consider ways to mark ID only fields in model."
+  :note "Part of Variant Descriptor, currently looking for a replacement in GA4GH"}
+ {:id :cg/caseCohort,
+  :type :rdf/Property
+  :range :cg/Cohort
+  :maturity :cg/Draft}
+ {:id :cg/classification,
+  :type :rdf/Property
+  :range :skos/Concept
+  :value-set :cg/ClassificationValueSet
+  :reference :sepio/classification}
+ {:id :cg/contributions,
+  :type :rdf/Property
+  :range :cg/Contribution
+  :reference :sepio/contributions}
+ {:id :cg/contributor,
+  :type :rdf/Property
+  :range :cg/Agent
+  :internal-note "Is PROV stable enough to include directly for types? How does this interact with the CAM model?"
+  :reference :sepio/contributor}
+ {:id :cg/controlCohort,
+  :type :rdf/Property
+  :range :cg/Cohort
+  :maturity :cg/Draft}
+ {:id :cg/curationReasonDescription,
+  :type :rdf/Property
+  :range :String
+  :maturity :cg/Internal}
+ {:id :cg/curationReasons,
+  :type :rdf/Property
+  :range :skos/Concept
+  :value-set :cg/CurationReasonsValueSet
+  :maturity :cg/Internal}
+ {:id :cg/date,
+  :type :rdf/Property
+  :range :cg/String
+  :note "Expect ISO-8601 DateTime"
+  :reference :sepio/date}
+ {:id :cg/detectionMethodText,
+  :type :rdf/Property
+  :maturity :cg/Volatile
+  :range :String
+  :note "Free-text description of sequencing method."
+  :internal-note "Probably not going to change--just carrying additional GCI Data"}
+ {:id :cg/direction,
+  :type :rdf/Property
+  :reference :sepio/direction
+  :range :skos/Concept
+  :value-set :cg/DirectionValueSet}
+ {:id :cg/directionOfEvidenceProvided,
+  :type :rdf/Property
+  :reference :sepio/directionOfEvidenceProvided
+  :range :skos/Concept
+  :value-set :cg/DirectionValueSet}
+ {:id :cg/LODScore,
+  :type :rdf/Property
+  :maturity :cg/Draft
+  :range :Number}
+ {:id :cg/estimatedLODScore,
+  :type :rdf/Property
+  :maturity :cg/Internal
+  :range :Number
+  :note "Reflects distinction between LOD score included in published literature and LOD score estimated using ClinGen Gene Curation SOP."}
+ {:id :cg/ethnicity,
+  :type :rdf/Property
+  :maturity :cg/Draft
+  :range :skos/Concept
+  :value-set :cg/EthnicityValueSet}
+ {:id :cg/family,
+  :type :rdf/Property
+  :range :cg/Family
+  :maturity :cg/Draft
+  :description "Family referenced in SegregationStudyResult"}
+ {:id :cg/geneticTestingMethod,
+  :type :rdf/Property
+  :maturity :cg/draft
+  :range :skos/Concept
+  :value-set :cg/GeneticTestingMethodValueSet
+  :internal-note "Need some thought around the terminology here. May be 'testingMethod and confirmationMethod."}
+ {:id :cg/functionalDataSupport,
+  :type :rdf/Property
+  :maturity :cg/Volatile
+  :range :String
+  :internal-note "Part of VariantFunctionalImpactEvidence, which needs to be reconcieved as a Study Finding. This is just a 'Yes' or 'No' string, not cast as a boolean value"}
+ {:id :cg/hasEvidenceItems,
+  :type :rdf/Property
+  :range :cg/EvidenceItem
+  :reference :sepio/hasEvidenceItems
+  :internal-note "EvidenceItem will be diverse. May in in most cases be a study finding. Look at class/subclass relationships to substantiate this."}
+ {:id :cg/hasEvidenceLines,
+  :type :rdf/Property
+  :range :cg/EvidenceLine
+  :reference :sepio/hasEvidenceLines}
+ {:id :cg/hasVariant,
+  :type :rdf/Property
+  :range :cg/VariationDescriptor
+  :maturity :cg/Draft
+  :internal-note "The range of this should probably go beyond just a variationdescriptor at some point, but it's probably acceptable for now"}
+ {:id :cg/interpretation,
+  :type :rdf/Property
+  :range :skos/Concept
+  :value-set :cg/InterpretationValueSet
+  :reference :sepio/interpretation}
+ {:id :cg/lowerConfidenceLimit,
+  :type :rdf/Property
+  :range :Number
+  :maturity :cg/Draft}
+ {:id :cg/meetsInclusionCriteria,
+  :type :rdf/Property
+  :range :cg/Boolean
+  :maturity :cg/Volatile
+  :internal-note "Indication whether or not a Segregation Result is used to calculate an aggregate result. Probably this should spark a discussion about whether."}
+ {:id :cg/member,
+  :type :rdf/Property
+  :range :cg/Proband
+  :maturity :cg/Draft
+  :internal-note "Families have probands that are members of them."}
+ {:id :cg/supportingMethodTypes,
+  :type :rdf/Property
+  :reference :sepio/supportingMethodTypes
+  :maturity :cg/Draft
+  :range :skos/Concept
+  :value-set :cg/MethodValueSet
+  :internal-note "Method of analysis for a CaseControlStudyResult. May be able to use more general term, but should commit either way. SEPIO uses supportingMethods and supportingMethodTypes--this seems like an appropriate use" }
+ {:id :cg/modeOfInheritance,
+  :type :rdf/Property
+  :maturity :cg/Volatile
+  :range :String
+  :note "This currently a string description of mode of inheritance attached to a family result. This may be more applicable to a SegregationStudyResult. "
+  :internal-flag #{:remodel}
+  :internal-options ["Autosomal dominant/X-linked" "Semidominant" "Autosomal recessive"]}
+ {:id :cg/modeOfInheritanceQualifier,
+  :type :rdf/Property
+  :range :rdfs/Class
+  :maturity :cg/Draft}
+ {:id :cg/modelSystem,
+  :type :rdf/Property
+  :range :skos/Concept
+  :value-set :cg/ModelSystemValueSet
+  :maturity :cg/Draft}
+ {:id :cg/numWithVariant,
+  :range :Integer
+  :type :rdf/Property
+  :maturity :cg/Draft}
+ {:id :cg/objectCondition,
+  :range :rdfs/Class
+  :type :rdf/Property
+  :maturity :cg/Draft}
+ {:id :cg/variantObservedIn,
+  :type :rdf/Property
+  :range :cg/Proband
+  :maturity :cg/Draft
+  :note "Inverse of hasVariant, attribute of VariantObservationStudyResult"}
+ {:id :cg/pValue,
+  :type :rdf/Property
+  :range :Number
+  :maturity :cg/Draft}
+ {:id :cg/paternityMaternityConfirmed,
+  :type :rdf/Property
+  :range :String
+  :note "one of either 'none' 'Yes' or 'No'. Use internally to contribute to scoring the weight of inheritance evidence, particularly whether the variant is de-novo."
+  :internal-note "This appears to be broken, need to confirm what's going on in other data set."
+  :maturity :cg/Internal}
+ {:id :cg/phaseStatusConfidence,
+  :type :rdf/Property
+  :range :skos/Concept
+  :value-set :PhaseStatusConfidenceValueSet
+  :maturity :cg/Internal}
+ {:id :cg/phenotypeFreeText,
+  :type :rdf/Property
+  :range :String
+  :maturity :cg/Volatile
+  :note "Free text used to describe phenotypes in place of coded terms. Could restructure as mappable concept."}
+ {:id :cg/phenotypeNegativeAlleleNegative,
+  :type :rdf/Property
+  :range :Integer
+  :maturity :cg/Draft
+  :note "Number of individuals in study without either the phenotype or an allele of interest."}
+ {:id :cg/phenotypePositiveAllelePositive,
+  :type :rdf/Property
+  :range :Integer
+  :maturity :cg/Draft
+  :note "Number of individuals in study with both the phenotype and an allele of interest."}
+ {:id :cg/phenotypes,
+  :type :rdf/Property
+  :range :rdfs/Class
+  :maturity :cg/Draft
+  :note "Generally expected to be a set of classes in Human Phenotype Ontology (HPO)"}
+ {:id :cg/predicate,
+  :type :rdf/Property
+  :range :skos/Concept
+  :reference :sepio/predicate
+  :note "For Gene Disease Validity, should be :cg/variantsInGeneCausalFor "}
+ {:id :cg/previousTesting,
+  :type :rdf/Property
+  :maturity :cg/Volatile
+  :range :Boolean
+  :internal-note "boolean value for whether the proband has been previously tested."}
+ {:id :cg/previousTestingDescription,
+  :type :rdf/Property
+  :range :String
+  :maturity :cg/Volatile}
+ {:id :cg/proband,
+  :type :rdf/Property
+  :maturity :cg/Draft
+  :range :cg/Proband
+  :internal-note "used by segregation, meant to indicate the individual presenting to healthcare within the family. Used when applying a variant score for that individual separate from the segregation score."}
+ {:id :cg/proposition,
+  :type :rdf/Property
+  :range :cg/Proposition
+  :reference :sepio/proposition
+  :note "Should be GeneDiseaseValidityProposition."}
+ {:id :cg/publishedLODScore,
+  :type :rdf/Property
+  :maturity :cg/Internal
+  :range :Number
+  :note "Reflects distinction between LOD score included in published literature and LOD score estimated using ClinGen Gene Curation SOP."}
+ {:id :cg/relatedCondition,
+  :type :rdf/Property
+  :range :rdfs/Class
+  :maturity :cg/Volatile
+  :internal-notes "Used in Cohort, not entirely sure how to leverage this. Currently poorly named--listed as commonDiagnosis in Case Control."
+  :attention-before-final true}
+ {:id :cg/score,
+  :type :rdf/Property
+  :range :Number
+  :reference :sepio/score}
+ {:id :cg/scoreOfEvidenceProvided,
+  :type :rdf/Property
+  :range :Number
+  :reference :sepio/scoreOfEvidenceProvided}
+ {:id :cg/genotypeConfirmationMethod,
+  :type :rdf/Property
+  :maturity :cg/Draft
+  :range :skos/Concept
+  :value-set :cg/GeneticTestingMethodValueSet}
+ {:id :cg/sequence,
+  :type :rdf/Property
+  :range :Integer
+  :maturity :cg/Internal
+  :note "provides cardinal ordering of events on Data Exchange"}
+ {:id :cg/sex,
+  :type :rdf/Property
+  :maturity :cg/Draft
+  :range :skos/Concept
+  :value-set :cg/SexValueSet}
+ {:id :cg/specifiedBy,
+  :type :rdf/Property
+  :range :skos/Concept
+  :value-set :cg/SOPValueSet
+  :reference :sepio/specifiedBy}
+ {:id :cg/statisticalSignificanceType,
+  :type :rdf/Property
+  :maturity :cg/Volatile
+  :range :String
+  :note "Expect some alignment of statistical tests at the GA4GH level. This part of the model does not reflect such an alignment. This is a free-text field, unlikely to be re-used at the aligned level."}
+ {:id :cg/statisticalSignificanceValue,
+  :type :rdf/Property
+  :maturity :cg/Volatile
+  :range :Number
+  :note "Expect some alignment of statistical tests at the GA4GH level. This part of the model does not reflect such an alignment."}
+ {:id :cg/statisticalSignificanceValueType,
+  :type :rdf/Property
+  :maturity :cg/Volatile
+  :range :String
+  :note "Expect some alignment of statistical tests at the GA4GH level. This part of the model does not reflect such an alignment. This is a free-text field, unlikely to be re-used at the aligned level."}
+ {:id :cg/subjectGene,
+  :type :rdf/Property
+  :range :skos/Concept
+  :json-type :String
+  :note "IRI of Gene."
+  :internal-note "This is a case where the representation will differ between RDF and JSON, since JSON doesn't have a Resource type."
+  :maturity :cg/Draft}
+ {:id :cg/upperConfidenceLimit,
+  :type :rdf/Property
+  :range :Number
+  :maturity :cg/Volatile}
+ {:id :cg/version
+  :type :rdf/Property
+  :range :String
+  :maturity :cg/Draft}
+ {:id :cg/zygosity,
+  :type :rdf/Property
+  :range :skos/Concept
+  :value-set :skos/ZygosityValueSet
+  :maturity :cg/Draft}
+ {:id :dc/description,
+  :type :rdf/Property
+  :maturity :cg/Draft
+  :range :String
+  :internal-note "Used everywhere in our model, but am deriving this from Dublin Core rather than SEPIO. Will probably leave for now."
+  :tag #{:cg/Meta}}
+ {:id :dc/isVersionOf,
+  :type :rdf/Property
+  :maturity :cg/Draft
+  :range :cg/Resource
+  :json-type :String
+  :internal-note "This is needed as part of a provennance scheme, used to refer to a parent record that may have several (immutable) versions. Also haven't defined the type of Ur-records yet "
+  :tag #{:cg/Meta}}
+ {:id :dc/source,
+  :type :rdf/Property
+  :maturity :cg/Draft
+  :range :cg/Resource
+  :json-type :String
+  :tag #{:cg/Meta}}
+ {:id :rdf/type,
+  :type :rdf/Property
+  :maturity :cg/Draft
+  :range :rdfs/Class
+  :tag #{:cg/Meta}}
+ {:id :rdfs/label,
+  :type :rdf/Property
+  :maturity :cg/Draft
+  :range :String
+  :tag #{:cg/Meta}}
+ {:id :skos/prefLabel,
+  :type :rdf/Property
+  :maturity :cg/Draft
+  :range :String
+  :tag #{:cg/Meta}}
+ ;; Value Sets
+ {:id :cg/ActivitytypeValueSet,
+  :skos/member [:cg/Evaluated :cg/Approved :cg/Submitted]}
+ {:id :cg/AgetypeValueSet,
+  :type :skos/Collection
+  :skos/member
+  [:cg/AgeAtReport :cg/AgeAtOnset :cg/AgeAtDeath :cg/AgeAtDiagnosis]}
+ {:id :cg/AgeunitValueSet,
+  :type :skos/Collection
+  :skos/member
+  [:cg/Months
+   :cg/WeeksGestation
+   :cg/Days
+   :cg/Hours
+   :cg/Weeks
+   :cg/Years]}
+ {:id :cg/VariantoriginValueSet,
+  :type :skos/Collection
+  :skos/member
+  [:cg/DeNovoAlleleOrigin :cg/AlleleOrigin :cg/GermlineAlleleOrigin]}
+ {:id :cg/CalculatedclassificationValueSet,
+  :type :skos/Collection
+  :skos/member
+  [:cg/Limited
+   :cg/Strong
+   :cg/Definitive
+   :cg/NoKnownDiseaseRelationship
+   :cg/Moderate]}
+ {:id :cg/ClassificationValueSet,
+  :type :skos/Collection
+  :skos/member
+  [:cg/Limited
+   :cg/Strong
+   :cg/Refuted
+   :cg/Definitive
+   :cg/NoKnownDiseaseRelationship
+   :cg/Disputed
+   :cg/Moderate]}
+ {:id :cg/CurationreasonsValueSet,
+  :type :skos/Collection
+  :skos/member
+  [:cg/RecurationFrameworkChange
+   :cg/RecurationCommunityRequest
+   :cg/DiseaseNameUpdate
+   :cg/RecurationDiscrepancyResolution
+   :cg/RecurationErrorAffectingScoreorClassification
+   :cg/RecurationTiming
+   :cg/RecurationNewEvidence
+   :cg/ErrorClarification
+   :cg/NewCuration]}
+ {:id :cg/DirectionofevidenceprovidedValueSet,
+  :type :skos/Collection
+  :skos/member [:cg/Disputes :cg/Neutral :cg/Supports]}
+ {:id :cg/EthnicityValueSet,
+  :type :skos/Collection
+  :skos/member
+  [:cg/NotHispanicOrLatino :cg/Unknown :cg/HispanicOrLatino]}
+ {:id :cg/SexValueSet,
+  :type :skos/Collection
+  :skos/member
+  [:cg/AmbiguousSex
+   :cg/Unknown
+   :cg/Other
+   :cg/Male
+   :cg/Female
+   :cg/TransMale
+   :cg/Intersex]}
+ {:id :cg/SpecifiedbyValueSet,
+  :type :skos/Collection
+  :skos/member
+  [:cg/GeneValidityProbandADDeNovoCriteria
+   :cg/GeneValidityCriteria11
+   :cg/GeneValidityOverallExperimentalEvidenceCriteria
+   :cg/GeneValidityNonNullVariantCriteria
+   :cg/GeneValidityPatientCellRescueCriteria
+   :cg/GeneValidityOverallFunctionalEvidenceCriteria
+   :cg/GeneValidityBiochemicalFunctionCriteria
+   :cg/GeneValidityUncategorizedProbandCriteria
+   :cg/GeneValidityCriteria8
+   :cg/GeneValidityProteinInteractionCriteria
+   :cg/GeneValidityCriteria6
+   :cg/GeneValidityNonHumanModelOrganismCriteria
+   :cg/GeneValidityOverallAutosomalDominantDeNovoVariantEvidenceCriteria
+   :cg/GeneValidityOverallGeneticEvidenceCriteria
+   :cg/GeneValidityMaximumProbandScoreCriteria
+   :cg/GeneValiditySegregationEvidenceCriteria
+   :cg/GeneValidityCriteria10
+   :cg/GeneValidityCellCultureRescueCriteria
+   :cg/GeneValidityOverallFunctionalAlterationEvidenceCriteria
+   :cg/GeneValidityNonHumanRescueCriteria
+   :cg/GeneValidityCriteria5
+   :cg/GeneValidityCriteria9
+   :cg/GeneValidityNullVariantCriteria
+   :cg/GeneValidityHumanRescueCriteria
+   :cg/GeneValidityOverallModelAndRescueEvidenceCriteria
+   :cg/GeneValidityOverallAutosomalDominantOtherVariantEvidenceCriteria
+   :cg/GeneValidityProbandARDeNovoNullVariantCriteria
+   :cg/GeneValidityCriteria12
+   :cg/GeneValidityPatientCellFunctionalAlterationCriteria
+   :cg/GeneValidityGeneExpressionCriteria
+   :cg/GeneValidityOverallCaseControlEvidenceCriteria
+   :cg/GeneValidityCellCultureModelOrganismCriteria
+   :cg/GeneValidityCriteria4
+   :cg/GeneValidityNonPatientCellFunctionalAlterationCriteria
+   :cg/GeneValidityProbandADNonNullCriteria
+   :cg/GeneValidityProbandADNullCriteria
+   :cg/GeneValidityCriteria7
+   :cg/GeneValidityOverallAutosomalDominantNullVariantEvidenceCriteria
+   :cg/GeneValidityCaseControlAggregateVariantAnalysisCriteria
+   :cg/GeneValidityProbandARNonNullCriteria
+   :cg/GeneValidityCaseControlSingleVariantAnalysisCriteria]}
+ {:id :cg/ZygosityValueSet,
+  :type :skos/Collection
+  :skos/member
+  [:cg/Homozygous
+   :cg/BiallelicCompoundHeterozygous
+   :cg/Heterozygous
+   :cg/Hemizygous
+   :cg/MonoallelicHeterozygous
+   :cg/TwoVariantsInTrans
+   :cg/BiallelicHomozygous]}
+ {:id :cg/GeneticTestingMethodValueSet,
+  :type :skos/Collection,
+  :skos/member [:cg/GenePanels
+                :cg/SangerSequencing
+                :cg/ChromosomalMicroarray
+                :cg/RestrictionDigest
+                :cg/Genotyping
+                :cg/SSCP
+                :cg/ExomeSequencing
+                :cg/LinkageAnalysis
+                :cg/Other
+                :cg/PCR
+                :cg/WholeGenomeSequencing
+                :cg/DenaturingGradientGel
+                :cg/HomozygosityMapping
+                :cg/HighResolutionMelting]}
+ {:id :cg/Evaluated, :type :skos/Concept}
+ {:id :cg/Approved, :type :skos/Concept}
+ {:id :cg/Submitted, :type :skos/Concept}
+ {:id :cg/AgeAtReport, :type :skos/Concept}
+ {:id :cg/AgeAtOnset, :type :skos/Concept}
+ {:id :cg/AgeAtDeath, :type :skos/Concept}
+ {:id :cg/AgeAtDiagnosis, :type :skos/Concept}
+ {:id :cg/Months, :type :skos/Concept}
+ {:id :cg/WeeksGestation, :type :skos/Concept}
+ {:id :cg/Days, :type :skos/Concept}
+ {:id :cg/Hours, :type :skos/Concept}
+ {:id :cg/Weeks, :type :skos/Concept}
+ {:id :cg/Years, :type :skos/Concept}
+ {:id :cg/DeNovoAlleleOrigin, :type :skos/Concept}
+ {:id :cg/AlleleOrigin, :type :skos/Concept}
+ {:id :cg/GermlineAlleleOrigin, :type :skos/Concept}
+ {:id :cg/Limited, :type :skos/Concept}
+ {:id :cg/Strong, :type :skos/Concept}
+ {:id :cg/Definitive, :type :skos/Concept}
+ {:id :cg/NoKnownDiseaseRelationship, :type :skos/Concept}
+ {:id :cg/Moderate, :type :skos/Concept}
+ {:id :cg/Limited, :type :skos/Concept}
+ {:id :cg/Strong, :type :skos/Concept}
+ {:id :cg/Refuted, :type :skos/Concept}
+ {:id :cg/Definitive, :type :skos/Concept}
+ {:id :cg/NoKnownDiseaseRelationship, :type :skos/Concept}
+ {:id :cg/Disputed, :type :skos/Concept}
+ {:id :cg/Moderate, :type :skos/Concept}
+ {:id :cg/RecurationFrameworkChange, :type :skos/Concept}
+ {:id :cg/RecurationCommunityRequest, :type :skos/Concept}
+ {:id :cg/DiseaseNameUpdate, :type :skos/Concept}
+ {:id :cg/RecurationDiscrepancyResolution, :type :skos/Concept}
+ {:id :cg/RecurationErrorAffectingScoreorClassification,
+  :type :skos/Concept}
+ {:id :cg/RecurationTiming, :type :skos/Concept}
+ {:id :cg/RecurationNewEvidence, :type :skos/Concept}
+ {:id :cg/ErrorClarification, :type :skos/Concept}
+ {:id :cg/NewCuration, :type :skos/Concept}
+ {:id :cg/Neutral, :type :skos/Concept}
+ {:id :cg/Supports, :type :skos/Concept}
+ {:id :cg/DirectionValueSet, :skos/member [:cg/Neutral :cg/Supports]}
+ {:id :cg/Disputes, :type :skos/Concept}
+ {:id :cg/Neutral, :type :skos/Concept}
+ {:id :cg/Supports, :type :skos/Concept}
+ {:id :cg/NotHispanicOrLatino, :type :skos/Concept}
+ {:id :cg/Unknown, :type :skos/Concept}
+ {:id :cg/HispanicOrLatino, :type :skos/Concept}
+ {:id :cg/AmbiguousSex, :type :skos/Concept}
+ {:id :cg/Unknown, :type :skos/Concept}
+ {:id :cg/Other, :type :skos/Concept}
+ {:id :cg/Male, :type :skos/Concept}
+ {:id :cg/Female, :type :skos/Concept}
+ {:id :cg/TransMale, :type :skos/Concept}
+ {:id :cg/Intersex, :type :skos/Concept}
+ {:id :cg/GeneValidityProbandADDeNovoCriteria, :type :skos/Concept}
+ {:id :cg/GeneValidityCriteria11, :type :skos/Concept}
+ {:id :cg/GeneValidityOverallExperimentalEvidenceCriteria,
+  :type :skos/Concept}
+ {:id :cg/GeneValidityNonNullVariantCriteria, :type :skos/Concept}
+ {:id :cg/GeneValidityPatientCellRescueCriteria, :type :skos/Concept}
+ {:id :cg/GeneValidityOverallFunctionalEvidenceCriteria,
+  :type :skos/Concept}
+ {:id :cg/GeneValidityBiochemicalFunctionCriteria, :type :skos/Concept}
+ {:id :cg/GeneValidityUncategorizedProbandCriteria,
+  :type :skos/Concept}
+ {:id :cg/GeneValidityCriteria8, :type :skos/Concept}
+ {:id :cg/GeneValidityProteinInteractionCriteria, :type :skos/Concept}
+ {:id :cg/GeneValidityCriteria6, :type :skos/Concept}
+ {:id :cg/GeneValidityNonHumanModelOrganismCriteria,
+  :type :skos/Concept}
+ {:id
+  :cg/GeneValidityOverallAutosomalDominantDeNovoVariantEvidenceCriteria,
+  :type :skos/Concept}
+ {:id :cg/GeneValidityOverallGeneticEvidenceCriteria,
+  :type :skos/Concept}
+ {:id :cg/GeneValidityMaximumProbandScoreCriteria, :type :skos/Concept}
+ {:id :cg/GeneValiditySegregationEvidenceCriteria, :type :skos/Concept}
+ {:id :cg/GeneValidityCriteria10, :type :skos/Concept}
+ {:id :cg/GeneValidityCellCultureRescueCriteria, :type :skos/Concept}
+ {:id :cg/GeneValidityOverallFunctionalAlterationEvidenceCriteria,
+  :type :skos/Concept}
+ {:id :cg/GeneValidityNonHumanRescueCriteria, :type :skos/Concept}
+ {:id :cg/GeneValidityCriteria5, :type :skos/Concept}
+ {:id :cg/GeneValidityCriteria9, :type :skos/Concept}
+ {:id :cg/GeneValidityNullVariantCriteria, :type :skos/Concept}
+ {:id :cg/GeneValidityHumanRescueCriteria, :type :skos/Concept}
+ {:id :cg/GeneValidityOverallModelAndRescueEvidenceCriteria,
+  :type :skos/Concept}
+ {:id
+  :cg/GeneValidityOverallAutosomalDominantOtherVariantEvidenceCriteria,
+  :type :skos/Concept}
+ {:id :cg/GeneValidityProbandARDeNovoNullVariantCriteria,
+  :type :skos/Concept}
+ {:id :cg/GeneValidityCriteria12, :type :skos/Concept}
+ {:id :cg/GeneValidityPatientCellFunctionalAlterationCriteria,
+  :type :skos/Concept}
+ {:id :cg/GeneValidityGeneExpressionCriteria, :type :skos/Concept}
+ {:id :cg/GeneValidityOverallCaseControlEvidenceCriteria,
+  :type :skos/Concept}
+ {:id :cg/GeneValidityCellCultureModelOrganismCriteria,
+  :type :skos/Concept}
+ {:id :cg/GeneValidityCriteria4, :type :skos/Concept}
+ {:id :cg/GeneValidityNonPatientCellFunctionalAlterationCriteria,
+  :type :skos/Concept}
+ {:id :cg/GeneValidityProbandADNonNullCriteria, :type :skos/Concept}
+ {:id :cg/GeneValidityProbandADNullCriteria, :type :skos/Concept}
+ {:id :cg/GeneValidityCriteria7, :type :skos/Concept}
+ {:id
+  :cg/GeneValidityOverallAutosomalDominantNullVariantEvidenceCriteria,
+  :type :skos/Concept}
+ {:id :cg/GeneValidityCaseControlAggregateVariantAnalysisCriteria,
+  :type :skos/Concept}
+ {:id :cg/GeneValidityProbandARNonNullCriteria, :type :skos/Concept}
+ {:id :cg/GeneValidityCaseControlSingleVariantAnalysisCriteria,
+  :type :skos/Concept}
+ {:id :cg/Homozygous, :type :skos/Concept}
+ {:id :cg/BiallelicCompoundHeterozygous, :type :skos/Concept}
+ {:id :cg/Heterozygous, :type :skos/Concept}
+ {:id :cg/Hemizygous, :type :skos/Concept}
+ {:id :cg/MonoallelicHeterozygous, :type :skos/Concept}
+ {:id :cg/TwoVariantsInTrans, :type :skos/Concept}
+ {:id :cg/BiallelicHomozygous, :type :skos/Concept}
+ {:id :cg/GenePanels, :type :skos/Concept}
+ {:id :cg/SangerSequencing, :type :skos/Concept}
+ {:id :cg/ChromosomalMicroarray, :type :skos/Concept}
+ {:id :cg/RestrictionDigest, :type :skos/Concept}
+ {:id :cg/Genotyping, :type :skos/Concept}
+ {:id :cg/SSCP, :type :skos/Concept}
+ {:id :cg/ExomeSequencing, :type :skos/Concept}
+ {:id :cg/LinkageAnalysis, :type :skos/Concept}
+ {:id :cg/Other, :type :skos/Concept}
+ {:id :cg/PCR, :type :skos/Concept}
+ {:id :cg/WholeGenomeSequencing, :type :skos/Concept}
+ {:id :cg/DenaturingGradientGel, :type :skos/Concept}
+ {:id :cg/HomozygosityMapping, :type :skos/Concept}
+ {:id :cg/HighResolutionMelting, :type :skos/Concept}
+ 
+ ]
