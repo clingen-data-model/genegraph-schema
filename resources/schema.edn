@@ -751,13 +751,17 @@
   :tag #{:cg/Meta}}
  ;; Value Sets
  {:id :cg/ActivityTypeValueSet,
+  :description "The types of activity a contributor may have performed on a
+      curation record."
   :type :skos/Collection
   :skos/member [:cg/Evaluated :cg/Approved :cg/Submitted]}
  {:id :cg/AgeTypeValueSet,
+  :description "The events to which a recorded age may refer."
   :type :skos/Collection
   :skos/member
   [:cg/AgeAtReport :cg/AgeAtOnset :cg/AgeAtDeath :cg/AgeAtDiagnosis]}
  {:id :cg/AgeUnitValueSet,
+  :description "The units in which a recorded age may be expressed."
   :type :skos/Collection
   :skos/member
   [:cg/Months
@@ -767,6 +771,7 @@
    :cg/Weeks
    :cg/Years]}
  {:id :cg/VariantOriginValueSet,
+  :description "The possible origins of an observed allele."
   :type :skos/Collection
   :skos/member
   [:cg/DeNovoAlleleOrigin :cg/AlleleOrigin :cg/GermlineAlleleOrigin]}
@@ -815,10 +820,13 @@
   :type :skos/Collection
   :skos/member [:cg/Disputes :cg/Neutral :cg/Supports]}
  {:id :cg/EthnicityValueSet,
+  :description "The ethnicity categories that may be recorded for an
+      individual or cohort, captured separately from race."
   :type :skos/Collection
   :skos/member
   [:cg/NotHispanicOrLatino :cg/Unknown :cg/HispanicOrLatino]}
  {:id :cg/SexValueSet,
+  :description "The sex values that may be recorded for an individual."
   :type :skos/Collection
   :skos/member
   [:cg/AmbiguousSex
@@ -829,6 +837,8 @@
    :cg/TransMale
    :cg/Intersex]}
  {:id :cg/SpecifiedByValueSet,
+  :description "The criteria from the Gene-Disease Validity SOP under which
+      a piece of evidence may be assessed and scored."
   :type :skos/Collection
   :skos/member
   [:cg/GeneValidityProbandADDeNovoCriteria
@@ -948,17 +958,36 @@
   :description "The classification was approved by the expert panel."
   :type :skos/Concept}
  {:id :cg/Submitted, :type :skos/Concept}
- {:id :cg/AgeAtReport, :type :skos/Concept}
- {:id :cg/AgeAtOnset, :type :skos/Concept}
- {:id :cg/AgeAtDeath, :type :skos/Concept}
- {:id :cg/AgeAtDiagnosis, :type :skos/Concept}
+ {:id :cg/AgeAtReport,
+  :description "The recorded age refers to the age of the individual at the
+      time of the report."
+  :type :skos/Concept}
+ {:id :cg/AgeAtOnset,
+  :description "The recorded age refers to the age at onset of the
+      phenotype."
+  :type :skos/Concept}
+ {:id :cg/AgeAtDeath,
+  :description "The recorded age refers to the age at death."
+  :type :skos/Concept}
+ {:id :cg/AgeAtDiagnosis,
+  :description "The recorded age refers to the age at which the diagnosis
+      was made."
+  :type :skos/Concept}
  {:id :cg/Months, :type :skos/Concept}
- {:id :cg/WeeksGestation, :type :skos/Concept}
+ {:id :cg/WeeksGestation,
+  :description "Age expressed in weeks of gestation, for ages recorded
+      before birth."
+  :type :skos/Concept}
  {:id :cg/Days, :type :skos/Concept}
  {:id :cg/Hours, :type :skos/Concept}
  {:id :cg/Weeks, :type :skos/Concept}
  {:id :cg/Years, :type :skos/Concept}
- {:id :cg/DeNovoAlleleOrigin, :type :skos/Concept}
+ {:id :cg/DeNovoAlleleOrigin,
+  :description "The allele arose de novo: it is present in the affected
+      individual but absent from appropriately tested parents, or a parent
+      carries it mosaically. Postzygotic mosaicism is also treated as a de
+      novo occurrence."
+  :type :skos/Concept}
  {:id :cg/AlleleOrigin, :type :skos/Concept}
  {:id :cg/GermlineAlleleOrigin, :type :skos/Concept}
  {:id :cg/Limited,
@@ -1051,18 +1080,41 @@
       been independently reported, but no convincing contradictory evidence
       has emerged. Requires 7-11 points."
   :type :skos/Concept}
- {:id :cg/RecurationFrameworkChange, :type :skos/Concept}
- {:id :cg/RecurationCommunityRequest, :type :skos/Concept}
- {:id :cg/DiseaseNameUpdate, :type :skos/Concept}
- {:id :cg/RecurationDiscrepancyResolution, :type :skos/Concept}
+ {:id :cg/RecurationFrameworkChange,
+  :description "The curation was reevaluated to be consistent with a newer
+      version of the curation framework (e.g. SOP, specification, etc.)."
+  :type :skos/Concept}
+ {:id :cg/RecurationCommunityRequest,
+  :description "The curation was reevaluated at the request of a user,
+      either internal or external to ClinGen."
+  :type :skos/Concept}
+ {:id :cg/DiseaseNameUpdate,
+  :description "An administrative update in which the disease term was
+      updated without changing the overall scope of the original curation,
+      for example a Mondo update."
+  :type :skos/Concept}
+ {:id :cg/RecurationDiscrepancyResolution,
+  :description "A conflict with another group (e.g. ClinVar submitters for
+      VCEPs, GenCC submitters for GCEPs) prompted reevaluation."
+  :type :skos/Concept}
  {:id :cg/RecurationErrorAffectingScoreorClassification,
+  :description "An error resulted in incorrect scoring and/or
+      classification, prompting reevaluation."
   :type :skos/Concept}
  {:id :cg/RecurationTiming,
   :description "The classification is being re-evaluated because the
       recommended interval for recuration has elapsed."
   :type :skos/Concept}
- {:id :cg/RecurationNewEvidence, :type :skos/Concept}
- {:id :cg/ErrorClarification, :type :skos/Concept}
+ {:id :cg/RecurationNewEvidence,
+  :description "New evidence was evaluated since this classification was
+      last published."
+  :type :skos/Concept}
+ {:id :cg/ErrorClarification,
+  :description "An administrative update covering changes that do not alter
+      the overall classification and do not require rereview by the group,
+      such as typo corrections, the addition of clarifying language to free
+      text fields, and adding contributors."
+  :type :skos/Concept}
  {:id :cg/NewCuration,
   :description "The gene-disease relationship is being published for the
       first time."
@@ -1081,12 +1133,25 @@
  {:id :cg/Supports,
   :description "The evidence supports the proposition."
   :type :skos/Concept}
- {:id :cg/NotHispanicOrLatino, :type :skos/Concept}
- {:id :cg/Unknown, :type :skos/Concept}
- {:id :cg/HispanicOrLatino, :type :skos/Concept}
+ {:id :cg/NotHispanicOrLatino,
+  :description "The individual or cohort is reported as not Hispanic or
+      Latino. Ethnicity is recorded separately from race in the curation
+      interface."
+  :type :skos/Concept}
+ {:id :cg/Unknown,
+  :description "No value was reported in the source publication."
+  :type :skos/Concept}
+ {:id :cg/HispanicOrLatino,
+  :description "The individual or cohort is reported as Hispanic or Latino.
+      Ethnicity is recorded separately from race in the curation interface."
+  :type :skos/Concept}
  {:id :cg/AmbiguousSex, :type :skos/Concept}
- {:id :cg/Unknown, :type :skos/Concept}
- {:id :cg/Other, :type :skos/Concept}
+ {:id :cg/Unknown,
+  :description "No value was reported in the source publication."
+  :type :skos/Concept}
+ {:id :cg/Other,
+  :description "A value not covered by the other options in the set."
+  :type :skos/Concept}
  {:id :cg/Male, :type :skos/Concept}
  {:id :cg/Female, :type :skos/Concept}
  {:id :cg/TransMale, :type :skos/Concept}
@@ -1271,14 +1336,28 @@
  {:id :cg/SSCP, :type :skos/Concept}
  {:id :cg/ExomeSequencing, :type :skos/Concept}
  {:id :cg/LinkageAnalysis, :type :skos/Concept}
- {:id :cg/Other, :type :skos/Concept}
+ {:id :cg/Other,
+  :description "A value not covered by the other options in the set."
+  :type :skos/Concept}
  {:id :cg/PCR, :type :skos/Concept}
  {:id :cg/WholeGenomeSequencing, :type :skos/Concept}
  {:id :cg/DenaturingGradientGel, :type :skos/Concept}
  {:id :cg/HomozygosityMapping, :type :skos/Concept}
  {:id :cg/HighResolutionMelting, :type :skos/Concept}
- {:id :http://purl.obolibrary.org/obo/MI_0933, :type :skos/Concept}
- {:id :http://purl.obolibrary.org/obo/MI_0935, :type :skos/Concept}
+ {:id :http://purl.obolibrary.org/obo/MI_0933,
+  :description "Diverging genetic interaction, offered when curating protein
+      interaction evidence as the negative genetic interaction type: two
+      genetic perturbations combined result in a phenotype more severe or
+      penetrant than expected given the phenotypes of the individual
+      perturbations."
+  :type :skos/Concept}
+ {:id :http://purl.obolibrary.org/obo/MI_0935,
+  :description "Converging genetic interaction, offered when curating
+      protein interaction evidence as the positive genetic interaction type:
+      two genetic perturbations combined result in a phenotype less severe
+      or penetrant than expected, making the organism more wild type in
+      character with regard to that phenotype."
+  :type :skos/Concept}
  {:id :cg/GeneFunctionConsistentWithPhenotype,
   :description "The gene product performs a biochemical function consistent
       with the phenotype of the disease of interest. The function must have
@@ -1291,13 +1370,25 @@
       rather than predicted, and the other gene should have compelling
       evidence for its own disease relationship."
   :type :skos/Concept}
- {:id :http://purl.obolibrary.org/obo/MI_0208, :type :skos/Concept}
+ {:id :http://purl.obolibrary.org/obo/MI_0208,
+  :description "Genetic interaction: an effect in which two genetic
+      perturbations, when combined, result in a phenotype that is not merely
+      explained by the addition of the effects of the individual
+      perturbations. One of the four interaction types offered when curating
+      protein interaction evidence."
+  :type :skos/Concept}
  {:id :cg/GeneAlteredInAffectedPatients,
   :description "Expression of the gene is altered in individuals who have
       the disease, shown for example by examining tissue or cell samples
       from affected individuals whose molecular etiology is unknown."
   :type :skos/Concept}
- {:id :http://purl.obolibrary.org/obo/MI_0915, :type :skos/Concept}
+ {:id :http://purl.obolibrary.org/obo/MI_0915,
+  :description "Physical association: interaction between molecules within
+      the same physical complex, often identified under conditions
+      suggesting the molecules are in close proximity but not necessarily in
+      direct contact with each other. One of the four interaction types
+      offered when curating protein interaction evidence."
+  :type :skos/Concept}
  {:id :cg/GeneSpecificTreatmentRescuesPhenotype,
   :description "The disease phenotype can be rescued by a treatment specific
       to the gene: where the mechanism is loss of function, by exogenous
