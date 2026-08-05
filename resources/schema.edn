@@ -1,5 +1,6 @@
 [;; classes
  {:id :cg/Statement,
+  :description "A claim of purported truth as made by a particular agent, on a particular occasion. Statements may be used to simply put forth a possible fact (i.e. a 'proposition') as true, or to provide a more nuanced assessment of the level of confidence or evidence supporting a particular proposition."
   :type :rdfs/Class
   :reference :sepio/Statement
   :note "Some values ommitted when records are unpublished."
@@ -89,6 +90,7 @@
  {:id :cg/EvidenceLine
   :type :rdfs/Class
   :reference :sepio/EvidenceLine
+  :description "An independent, evidence-based argument that may support or refute the validity of a specific proposition. The strength and direction of this argument is based on an interpretation of one or more pieces of information as evidence for or against the target proposition."
   ;; check to see if attributes align with SEPIO
   :oneOf [:rdf/type
           :cg/specifiedBy]
@@ -147,8 +149,9 @@
  {:id :cg/Contribution,
   :type :rdfs/Class
   :reference :sepio/Contribution
+  :description "An action or actions taken by a particular agent in the creation, modification, assessment, or deprecation of some entity (e.g. a Statement, Evidence Line, DataSet, Publication, etc.)."
   :oneOf [:rdf/type
-          :cg/date ; 2 without, investigate
+          :cg/date                      ; 2 without, investigate
           :cg/activityType
           :cg/contributor]}
  {:id :cg/VariantFunctionalImpactEvidence
@@ -165,6 +168,7 @@
  {:id :cg/activityType,
   :type :rdf/Property
   :reference :sepio/activityType
+  :description "The specific type of activity performed or role played by an agent in making the contribution (e.g. for a publication, agents may contribute as a primary author, editor, figure designer, data generator, etc. . Values of this property may be framed as activities or as contribution roles (e.g. using terms from the Contribution Role Ontology (CRO))."
   :range :skos/Concept
   :value-set :cg/ActivityTypeValueSet}
  {:id :cg/ageType
@@ -227,16 +231,19 @@
   :type :rdf/Property
   :range :skos/Concept
   :value-set :cg/ClassificationValueSet
-  :reference :sepio/classification}
+  :reference :sepio/classification
+  :description "A single term or phrase summarizing the outcome of direction and strength assessments of a Statement's proposition, in terms of a classification of its subject."}
  {:id :cg/contributions,
   :type :rdf/Property
   :range :cg/Contribution
-  :reference :sepio/contributions}
+  :reference :sepio/contributions
+  :description "describes specific contributions made by an human or software agent to the creation, modification, or administrative management of a data record or object."}
  {:id :cg/contributor,
   :type :rdf/Property
   :range :cg/Agent
   :internal-note "Is PROV stable enough to include directly for types? How does this interact with the CAM model?"
-  :reference :sepio/contributor}
+  :reference :sepio/contributor
+  :description "The Agent that made the "}
  {:id :cg/controlCohort,
   :type :rdf/Property
   :range :cg/Cohort
@@ -254,7 +261,8 @@
   :type :rdf/Property
   :range :cg/String
   :note "Expect ISO-8601 DateTime"
-  :reference :sepio/date}
+  :reference :sepio/date
+  :description "The date that the Activity was completed."}
  {:id :cg/detectionMethodText,
   :type :rdf/Property
   :maturity :cg/Volatile
@@ -265,12 +273,14 @@
   :type :rdf/Property
   :reference :sepio/direction
   :range :skos/Concept
-  :value-set :cg/DirectionValueSet}
+  :value-set :cg/DirectionValueSet
+  :description "A term indicating whether the Statement supports, disputes, or remains neutral w.r.t. the validity of the Proposition it evaluates."}
  {:id :cg/directionOfEvidenceProvided,
   :type :rdf/Property
   :reference :sepio/directionOfEvidenceProvided
   :range :skos/Concept
-  :value-set :cg/DirectionValueSet}
+  :value-set :cg/DirectionValueSet
+  :description "The direction of support that the Evidence Line is determined to provide toward its target Proposition (supports, disputes, neutral)."}
  {:id :cg/LODScore,
   :type :rdf/Property
   :maturity :cg/Draft
@@ -305,11 +315,13 @@
   :type :rdf/Property
   :range :cg/EvidenceItem
   :reference :sepio/hasEvidenceItems
+  :description " An individual piece of information that was evaluated as evidence in building the argument represented by an Evidence Line."
   :internal-note "EvidenceItem will be diverse. May in in most cases be a study finding. Look at class/subclass relationships to substantiate this."}
  {:id :cg/hasEvidenceLines,
   :type :rdf/Property
   :range :cg/EvidenceLine
-  :reference :sepio/hasEvidenceLines}
+  :reference :sepio/hasEvidenceLines
+  :description "An evidence-based argument that supports or disputes the validity of the proposition that a Statement assesses or puts forth as true. The strength and direction of this argument (whether it supports or disputes  the proposition, and how strongly) is based on an interpretation of one or more pieces of information as evidence (i.e. 'Evidence Items)."}
  {:id :cg/hasVariant,
   :type :rdf/Property
   :range :cg/VariationDescriptor
@@ -319,7 +331,8 @@
   :type :rdf/Property
   :range :skos/Concept
   :value-set :cg/InterpretationValueSet
-  :reference :sepio/interpretation}
+  :reference :sepio/interpretation
+  :description "The outcome of an interpretation of lower-level data item(s) in a StudyResult, that express some broader conclusion or insight that was made (e.g. that data indicates a result to be is high, normal, or low)."}
  {:id :cg/lowerConfidenceLimit,
   :type :rdf/Property
   :range :Number
@@ -337,6 +350,7 @@
  {:id :cg/supportingMethodTypes,
   :type :rdf/Property
   :reference :sepio/supportingMethodTypes
+  :description "Types of methodological approaches that were executed to directly or indirectly support creation of the Information Entity."
   :maturity :cg/Draft
   :range :skos/Concept
   :value-set :cg/MethodValueSet
@@ -409,6 +423,7 @@
   :type :rdf/Property
   :range :skos/Concept
   :reference :sepio/predicate
+  :description "The relationship declared to hold between the subject and the object of the Proposition."
   :note "For Gene Disease Validity, should be :cg/variantsInGeneCausalFor "}
  {:id :cg/previousTesting,
   :type :rdf/Property
@@ -428,6 +443,7 @@
   :type :rdf/Property
   :range :cg/Proposition
   :reference :sepio/proposition
+  :description "A possible fact that the Statement assesses or puts forth as true."
   :note "Should be GeneDiseaseValidityProposition."}
  {:id :cg/publishedLODScore,
   :type :rdf/Property
@@ -443,11 +459,13 @@
  {:id :cg/score,
   :type :rdf/Property
   :range :Number
-  :reference :sepio/score}
+  :reference :sepio/score
+  :description "A quantitative score that indicates the strength of a Proposition's validity assessment in the direction indicated (i.e. how strongly supported or disputed the Proposition is believed to be).  Depending on its implementation, a score may reflect how *confident* that agent is that the Proposition is true or false, or the *strength of evidence* they believe supports or disputes it."}
  {:id :cg/scoreOfEvidenceProvided,
   :type :rdf/Property
   :range :Number
-  :reference :sepio/scoreOfEvidenceProvided}
+  :reference :sepio/scoreOfEvidenceProvided
+  :description "A quantitative score indicating the strength of support that an Evidence Line is determined to provide for or against its target Proposition, evaluated relative to the direction indicated by the directionOfEvidenceProvided value."}
  {:id :cg/genotypeConfirmationMethod,
   :type :rdf/Property
   :maturity :cg/Draft
@@ -467,7 +485,8 @@
   :type :rdf/Property
   :range :skos/Concept
   :value-set :cg/SpecifiedByValueSet
-  :reference :sepio/specifiedBy}
+  :reference :sepio/specifiedBy
+  :description "A specification that describes all or part of the process that led to creation of the Information Entity."}
  {:id :cg/statisticalSignificanceType,
   :type :rdf/Property
   :maturity :cg/Volatile

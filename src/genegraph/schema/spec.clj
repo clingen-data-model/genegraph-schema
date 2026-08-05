@@ -50,7 +50,7 @@
 
 (s/def ::class
   (s/keys :req-un [::id ::type ::oneOf]
-          :opt-un [::maturity ::reference ::note ::internal-note
+          :opt-un [::maturity ::reference ::note ::internal-note ::description
                    ::oneOrMoreOf ::zeroOrOneOf ::zeroOrMoreOf ::zeroOrManyOf
                    ::attributes]))
 
@@ -125,7 +125,7 @@
 (def known-keys
   "Keys recognized by the specs above, by entity type. s/keys ignores keys it
   does not know about, so `unknown-keys` uses this to catch misspellings."
-  {:rdfs/Class #{:id :type :maturity :reference :note :internal-note
+  {:rdfs/Class #{:id :type :maturity :reference :note :internal-note :description
                  :oneOf :oneOrMoreOf :zeroOrOneOf :zeroOrMoreOf :zeroOrManyOf
                  :attributes}
    :rdf/Property #{:id :type :maturity :reference :range :value-set :json-type
