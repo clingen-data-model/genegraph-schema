@@ -37,7 +37,7 @@
  {:id :cg/CaseControlStudyResult,
   :type :rdfs/Class
   :maturity :cg/Draft
-  :interal-note "Examine values for alignment. Let's try to get everything here to draft if possible"
+  :internal-note "Examine values for alignment. Let's try to get everything here to draft if possible"
   :oneOf [:cg/caseCohort
           :cg/controlCohort
           :rdfs/label
@@ -166,18 +166,18 @@
   :type :rdf/Property
   :reference :sepio/activityType
   :range :skos/Concept
-  :value-set :cg/ActivityTypes}
+  :value-set :cg/ActivityTypeValueSet}
  {:id :cg/ageType
   :type :rdf/Property
   :maturity :cg/Volatile
   :note "Age and duration units have yet to be aligned at GA4GH level; will adjust to conform to standard as it is developed."
   :range :skos/Concept
-  :value-set :cg/IndividualAgeTypes}
+  :value-set :cg/AgeTypeValueSet}
  {:id :cg/ageUnit
   :type :rdf/Property
   :maturity :cg/Volatile
   :range :skos/Concept
-  :value-set :cg/IndividualAgeUnits
+  :value-set :cg/AgeUnitValueSet
   :note "Age and duration units have yet to be aligned at GA4GH level; will adjust to conform to standard as it is developed."}
  {:id :cg/ageValue
   :type :rdf/Property
@@ -292,7 +292,7 @@
   :description "Family referenced in SegregationStudyResult"}
  {:id :cg/geneticTestingMethod,
   :type :rdf/Property
-  :maturity :cg/draft
+  :maturity :cg/Draft
   :range :skos/Concept
   :value-set :cg/GeneticTestingMethodValueSet
   :internal-note "Need some thought around the terminology here. May be 'testingMethod and confirmationMethod."}
@@ -357,7 +357,7 @@
   :range :skos/Concept
   :value-set :cg/ModelSystemValueSet
   :maturity :cg/Draft}
- {:id :cg/numWithVariant,
+ {:id :cg/numberWithVariant,
   :range :Integer
   :type :rdf/Property
   :maturity :cg/Draft}
@@ -383,7 +383,7 @@
  {:id :cg/phaseStatusConfidence,
   :type :rdf/Property
   :range :skos/Concept
-  :value-set :PhaseStatusConfidenceValueSet
+  :value-set :cg/PhaseStatusConfidenceValueSet
   :maturity :cg/Internal}
  {:id :cg/phenotypeFreeText,
   :type :rdf/Property
@@ -438,7 +438,7 @@
   :type :rdf/Property
   :range :rdfs/Class
   :maturity :cg/Volatile
-  :internal-notes "Used in Cohort, not entirely sure how to leverage this. Currently poorly named--listed as commonDiagnosis in Case Control."
+  :internal-note "Used in Cohort, not entirely sure how to leverage this. Currently poorly named--listed as commonDiagnosis in Case Control."
   :attention-before-final true}
  {:id :cg/score,
   :type :rdf/Property
@@ -466,7 +466,7 @@
  {:id :cg/specifiedBy,
   :type :rdf/Property
   :range :skos/Concept
-  :value-set :cg/SOPValueSet
+  :value-set :cg/SpecifiedByValueSet
   :reference :sepio/specifiedBy}
  {:id :cg/statisticalSignificanceType,
   :type :rdf/Property
@@ -501,7 +501,7 @@
  {:id :cg/zygosity,
   :type :rdf/Property
   :range :skos/Concept
-  :value-set :skos/ZygosityValueSet
+  :value-set :cg/ZygosityValueSet
   :maturity :cg/Draft}
  {:id :dc/description,
   :type :rdf/Property
@@ -538,13 +538,14 @@
   :range :String
   :tag #{:cg/Meta}}
  ;; Value Sets
- {:id :cg/ActivitytypeValueSet,
+ {:id :cg/ActivityTypeValueSet,
+  :type :skos/Collection
   :skos/member [:cg/Evaluated :cg/Approved :cg/Submitted]}
- {:id :cg/AgetypeValueSet,
+ {:id :cg/AgeTypeValueSet,
   :type :skos/Collection
   :skos/member
   [:cg/AgeAtReport :cg/AgeAtOnset :cg/AgeAtDeath :cg/AgeAtDiagnosis]}
- {:id :cg/AgeunitValueSet,
+ {:id :cg/AgeUnitValueSet,
   :type :skos/Collection
   :skos/member
   [:cg/Months
@@ -553,11 +554,11 @@
    :cg/Hours
    :cg/Weeks
    :cg/Years]}
- {:id :cg/VariantoriginValueSet,
+ {:id :cg/VariantOriginValueSet,
   :type :skos/Collection
   :skos/member
   [:cg/DeNovoAlleleOrigin :cg/AlleleOrigin :cg/GermlineAlleleOrigin]}
- {:id :cg/CalculatedclassificationValueSet,
+ {:id :cg/CalculatedClassificationValueSet,
   :type :skos/Collection
   :skos/member
   [:cg/Limited
@@ -575,7 +576,7 @@
    :cg/NoKnownDiseaseRelationship
    :cg/Disputed
    :cg/Moderate]}
- {:id :cg/CurationreasonsValueSet,
+ {:id :cg/CurationReasonsValueSet,
   :type :skos/Collection
   :skos/member
   [:cg/RecurationFrameworkChange
@@ -587,7 +588,7 @@
    :cg/RecurationNewEvidence
    :cg/ErrorClarification
    :cg/NewCuration]}
- {:id :cg/DirectionofevidenceprovidedValueSet,
+ {:id :cg/DirectionOfEvidenceProvidedValueSet,
   :type :skos/Collection
   :skos/member [:cg/Disputes :cg/Neutral :cg/Supports]}
  {:id :cg/EthnicityValueSet,
@@ -604,7 +605,7 @@
    :cg/Female
    :cg/TransMale
    :cg/Intersex]}
- {:id :cg/SpecifiedbyValueSet,
+ {:id :cg/SpecifiedByValueSet,
   :type :skos/Collection
   :skos/member
   [:cg/GeneValidityProbandADDeNovoCriteria
@@ -714,7 +715,9 @@
  {:id :cg/NewCuration, :type :skos/Concept}
  {:id :cg/Neutral, :type :skos/Concept}
  {:id :cg/Supports, :type :skos/Concept}
- {:id :cg/DirectionValueSet, :skos/member [:cg/Neutral :cg/Supports]}
+ {:id :cg/DirectionValueSet,
+  :type :skos/Collection
+  :skos/member [:cg/Neutral :cg/Supports]}
  {:id :cg/Disputes, :type :skos/Concept}
  {:id :cg/Neutral, :type :skos/Concept}
  {:id :cg/Supports, :type :skos/Concept}
