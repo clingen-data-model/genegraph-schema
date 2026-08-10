@@ -45,7 +45,9 @@ Because `s/keys` ignores keys it does not recognize, validity alone does not mea
 - `unknown-keys` — catches misspelled keys against the `known-keys` table. **Adding an optional key to a spec means adding it to `known-keys` too**, or the tool will report false positives.
 - `dangling-references` — catches references to ids the schema never defines.
 
-The `comment` block at the end of the namespace has ready-to-eval forms for all three checks. Run them after any edit to `schema.edn`.
+`undescribed` sits alongside them but is not a check: it lists entities still lacking a `:description`, so a non-empty result is remaining documentation work rather than an error. It collapses ids that appear more than once.
+
+The `comment` block at the end of the namespace has ready-to-eval forms for all of these. Run the two checks after any edit to `schema.edn`.
 
 Four references are known-dangling with no fix available: `:cg/InterpretationValueSet`, `:cg/MethodValueSet`, `:cg/ModelSystemValueSet`, and `:cg/PhaseStatusConfidenceValueSet` are referenced by properties but never defined, and their member terms exist nowhere in the repo.
 

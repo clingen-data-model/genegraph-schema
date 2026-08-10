@@ -1,4 +1,4 @@
-[;; classes
+  [;; classes
  {:id :cg/Statement,
   :description "A claim of purported truth as made by a particular agent, on a particular occasion. Statements may be used to simply put forth a possible fact (i.e. a 'proposition') as true, or to provide a more nuanced assessment of the level of confidence or evidence supporting a particular proposition."
   :type :rdfs/Class
@@ -35,10 +35,8 @@
                 :dc/description] ; 124 without a description
   }
  {:id :cg/GeneDiseaseValidityProposition,
-  :description "The assertion that variation in a given gene causes a given
-      disease under a given mode of inheritance. This gene-disease-mode of
-      inheritance (GDM) triad must be established before evidence collection
-      begins and constitutes the curation record."
+  :description "The proposition that variation in a given gene causes a given
+      disease under a given mode of inheritance."
   :type :rdfs/Class
   :maturity :cg/Draft
   :oneOf [:cg/predicate
@@ -49,10 +47,7 @@
   :description "The result of a study in which statistical analysis is used
       to evaluate enrichment of variants in cases compared to controls. Each
       study is assessed independently on variant detection methodology,
-      statistical power, bias and confounding factors, and statistical
-      significance, and may be assigned 0-6 points. The case-control
-      category may contribute at most 12 points, the maximum for genetic
-      evidence overall."
+      statistical power, bias and confounding factors."
   :type :rdfs/Class
   :maturity :cg/Draft
   :internal-note "Examine values for alignment. Let's try to get everything here to draft if possible"
@@ -75,13 +70,12 @@
   :type :rdfs/Class
   :maturity :cg/Draft
   :oneOf [:rdf/type
-          :dc/source]
+          :dc/source
+          :cg/variant]
   :zeroOrOneOf [:cg/zygosity
                 :cg/variantObservedIn
-                :cg/paternityMaternityConfirmed]
-  :attributes [:cg/variant               ; 0 fix then rerun
-               :cg/variantOrigin         ; 0 fix then rerun
-]}
+                :cg/paternityMaternityConfirmed
+                :cg/variantOrigin]}
  {:id :cg/Family
   :description "A family whose members are genotyped to determine whether a
       variant co-segregates with disease. A family may be used in a LOD
@@ -126,7 +120,6 @@
   :type :rdfs/Class
   :reference :sepio/EvidenceLine
   :description "An independent, evidence-based argument that may support or refute the validity of a specific proposition. The strength and direction of this argument is based on an interpretation of one or more pieces of information as evidence for or against the target proposition."
-  ;; check to see if attributes align with SEPIO
   :oneOf [:rdf/type
           :cg/specifiedBy]
   :zeroOrOneOf [:cg/directionOfEvidenceProvided ; should provably have this for everything
@@ -134,7 +127,7 @@
                 :cg/calculatedScore
                 :dc/description]
   :zeroOrManyOf [:cg/hasEvidenceItems] ; one without evidence items, investigate? also one with > 100
-  :attributes []}
+  }
  {:id :cg/SegregationStudyResult
   :description "The result of a segregation study, in which family members
       are genotyped to determine whether a variant co-segregates with
@@ -164,6 +157,7 @@
  {:id :cg/VariationDescriptor
   :type :rdfs/Class
   :maturity :cg/Volatile
+  :description "A reference to a variant."
   :note "The GA4GH used to have a similar concept. This was removed from the spec but has not yet been replaced by an equivalent term."
   :zeroOrOneOf [:skos/prefLabel] ;6 w/o
   :oneOf [:rdf/type
@@ -316,7 +310,7 @@
   :range :cg/Agent
   :internal-note "Is PROV stable enough to include directly for types? How does this interact with the CAM model?"
   :reference :sepio/contributor
-  :description "The Agent that made the "}
+  :description "The Agent that made the contribution."}
  {:id :cg/controlCohort,
   :description "The cohort of unaffected individuals against which cases are
       compared in a case-control study."
@@ -451,13 +445,13 @@
       calculation, for example where including a weaker candidate-gene LOD
       score would reduce the points otherwise warranted."
   :type :rdf/Property
-  :range :cg/Boolean
+  :range :Boolean
   :maturity :cg/Volatile
   :internal-note "Indication whether or not a Segregation Result is used to calculate an aggregate result. Probably this should spark a discussion about whether."}
  {:id :cg/member,
   :description "An individual belonging to the family under study."
   :type :rdf/Property
-  :range :cg/Proband
+  :range :cg/ProbandStudyResult
   :maturity :cg/Draft
   :internal-note "Families have probands that are members of them."}
  {:id :cg/supportingMethodTypes,
@@ -511,7 +505,7 @@
   :maturity :cg/Draft}
  {:id :cg/variantObservedIn,
   :type :rdf/Property
-  :range :cg/Proband
+  :range :cg/ProbandStudyResult
   :maturity :cg/Draft
   :note "Inverse of hasVariant, attribute of VariantObservationStudyResult"}
  {:id :cg/pValue,
@@ -601,7 +595,7 @@
       whose genotype phase is treated as unknown when counting segregations."
   :type :rdf/Property
   :maturity :cg/Draft
-  :range :cg/Proband
+  :range :cg/ProbandStudyResult
   :internal-note "used by segregation, meant to indicate the individual presenting to healthcare within the family. Used when applying a variant score for that individual separate from the segregation score."}
  {:id :cg/proposition,
   :type :rdf/Property
@@ -647,7 +641,7 @@
   :type :rdf/Property
   :range :Integer
   :maturity :cg/Internal
-  :note "provides cardinal ordering of events on Data Exchange"}
+  :description "Ordering of events on ClinGen Data Exchange"}
  {:id :cg/sex,
   :description "The reported sex of an individual. Sex bears on the
       interpretation of X-linked pedigrees, where affected probands are
@@ -916,13 +910,13 @@
       gene function study result, spanning gene function, functional
       alteration, model systems, and rescue."
   :type :skos/Collection,
-  :skos/member [:http://purl.obolibrary.org/obo/MI_0933
-                :http://purl.obolibrary.org/obo/MI_0935
+  :skos/member [:obo/MI_0933
+                :obo/MI_0935
                 :cg/GeneFunctionConsistentWithPhenotype
                 :cg/GeneFunctionSimilarToOtherKnownDiseaseCausingGene
-                :http://purl.obolibrary.org/obo/MI_0208
+                :obo/MI_0208
                 :cg/GeneAlteredInAffectedPatients
-                :http://purl.obolibrary.org/obo/MI_0915
+                :obo/MI_0915
                 :cg/GeneSpecificTreatmentRescuesPhenotype
                 :cg/ProteinAlterationDisruptsModelOrganism
                 :cg/GeneAlterationProducesDiseaseConsistentPhenotype
@@ -1344,14 +1338,14 @@
  {:id :cg/DenaturingGradientGel, :type :skos/Concept}
  {:id :cg/HomozygosityMapping, :type :skos/Concept}
  {:id :cg/HighResolutionMelting, :type :skos/Concept}
- {:id :http://purl.obolibrary.org/obo/MI_0933,
+ {:id :obo/MI_0933,
   :description "Diverging genetic interaction, offered when curating protein
       interaction evidence as the negative genetic interaction type: two
       genetic perturbations combined result in a phenotype more severe or
       penetrant than expected given the phenotypes of the individual
       perturbations."
   :type :skos/Concept}
- {:id :http://purl.obolibrary.org/obo/MI_0935,
+ {:id :obo/MI_0935,
   :description "Converging genetic interaction, offered when curating
       protein interaction evidence as the positive genetic interaction type:
       two genetic perturbations combined result in a phenotype less severe
@@ -1370,7 +1364,7 @@
       rather than predicted, and the other gene should have compelling
       evidence for its own disease relationship."
   :type :skos/Concept}
- {:id :http://purl.obolibrary.org/obo/MI_0208,
+ {:id :obo/MI_0208,
   :description "Genetic interaction: an effect in which two genetic
       perturbations, when combined, result in a phenotype that is not merely
       explained by the addition of the effects of the individual
@@ -1382,7 +1376,7 @@
       the disease, shown for example by examining tissue or cell samples
       from affected individuals whose molecular etiology is unknown."
   :type :skos/Concept}
- {:id :http://purl.obolibrary.org/obo/MI_0915,
+ {:id :obo/MI_0915,
   :description "Physical association: interaction between molecules within
       the same physical complex, often identified under conditions
       suggesting the molecules are in close proximity but not necessarily in

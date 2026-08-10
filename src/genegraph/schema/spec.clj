@@ -86,11 +86,11 @@
 (s/def ::value-set-entity
   (s/keys :req-un [::id ::type]
           :req [:skos/member]
-          :opt-un [::note ::internal-note]))
+          :opt-un [::note ::internal-note ::description]))
 
 (s/def ::concept
   (s/keys :req-un [::id ::type]
-          :opt-un [::maturity ::reference ::note ::internal-note]))
+          :opt-un [::maturity ::reference ::note ::internal-note ::description]))
 
 ;; ---------------------------------------------------------------------------
 ;; The schema as a whole
@@ -131,8 +131,8 @@
    :rdf/Property #{:id :type :maturity :reference :range :value-set :json-type
                    :tag :note :internal-note :description :internal-flag
                    :internal-options :attention-before-final}
-   :skos/Collection #{:id :type :skos/member :note :internal-note}
-   :skos/Concept #{:id :type :maturity :reference :note :internal-note}})
+   :skos/Collection #{:id :type :skos/member :note :internal-note :description}
+   :skos/Concept #{:id :type :maturity :reference :note :internal-note :description}})
 
 (defn unknown-keys
   "Entities carrying keys the specs do not describe, as a seq of
@@ -158,6 +158,16 @@
           :when (not (contains? defined referent))]
       {:id (:id e) :refers-to referent})))
 
+(defn undescribed
+  "Entities carrying no :description, as a seq of {:id ... :type ...}. Unlike
+  `unknown-keys` and `dangling-references` a non-empty result is not an error,
+  just the remaining documentation work. Ids appearing more than once in the
+  schema are reported once."
+  [schema]
+  (distinct (keep #(when-not (:description %)
+                     {:id (:id %) :type (entity-type %)})
+                  schema)))
+
 (comment
   ;; Validate the schema as it stands.
   (s/valid? ::schema (read-schema))
@@ -170,4 +180,15 @@
   ;; Misspelled keys and broken cross-references.
   (unknown-keys (read-schema))
   (dangling-references (read-schema))
+
+  ;; What still needs a description, and how much is left per type.
+  (undescribed (read-schema))
+  (->> (read-schema) undescribed (group-by :type) (map (fn [[t es]] [t (count es)])))
+
+  (->> (read-schema) undescribed (group-by :type))
+
+
+  ({:id :cg/supportingMethodTypes, :refers-to :cg/MethodValueSet}
+   {:id :cg/modelSystem, :refers-to :cg/ModelSystemValueSet}
+   {:id :cg/phaseStatusConfidence, :refers-to :cg/PhaseStatusConfidenceValueSet})
   )
