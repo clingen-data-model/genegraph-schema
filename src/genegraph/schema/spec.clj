@@ -182,13 +182,15 @@
   (dangling-references (read-schema))
 
   ;; What still needs a description, and how much is left per type.
-  (undescribed (read-schema))
+  (->> (read-schema)
+       undescribed
+       #_(filter #(= :rdf/Property (:type %)))
+       (map :id)
+       (map name))
+
   (->> (read-schema) undescribed (group-by :type) (map (fn [[t es]] [t (count es)])))
 
   (->> (read-schema) undescribed (group-by :type))
 
 
-  ({:id :cg/supportingMethodTypes, :refers-to :cg/MethodValueSet}
-   {:id :cg/modelSystem, :refers-to :cg/ModelSystemValueSet}
-   {:id :cg/phaseStatusConfidence, :refers-to :cg/PhaseStatusConfidenceValueSet})
   )

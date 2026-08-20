@@ -1110,18 +1110,12 @@
  {:id :cg/Neutral,
   :type :skos/Concept
   :description "The evidence is neutral with respect to the proposition."}
- {:id :cg/Supports,
-  :description "The evidence supports the proposition."
-  :type :skos/Concept}
  {:id :cg/Disputes,
   :description "The evidence contradicts the proposition and may bring the
       gene-disease relationship into question. Evidence in this direction
       cannot be assigned a score but is flagged as contradictory evidence
       for expert review."
   :type :skos/Concept}
- {:id :cg/Neutral,
-  :type :skos/Concept
-  :description "The evidence is neutral with respect to the proposition."}
  {:id :cg/Supports,
   :description "The evidence supports the proposition."
   :type :skos/Concept}
@@ -1157,7 +1151,7 @@
   :description "The biological sex of the individual is female. The individual identifies as male."}
  {:id :cg/TransFemale
   :type :skos/Concept
-  :description "The biological sex of the individual is male The individual identifies as female."}
+  :description "The biological sex of the individual is male. The individual identifies as female."}
  {:id :cg/Intersex
   :type :skos/Concept
   :description "An individual with both male and female sexual traits and organs."}
