@@ -158,6 +158,23 @@
           :when (not (contains? defined referent))]
       {:id (:id e) :refers-to referent})))
 
+(defn duplicate-ids
+  "Ids carried by more than one entity, as a seq of
+  {:id ... :count ... :types #{...} :identical? ...}. Repetition is expected
+  for concepts belonging to more than one value set; those entries are
+  identical copies. An entry with :identical? false, or with more than one
+  :type, is a genuine collision -- two different entities laying claim to the
+  same id, where a reference to that id no longer names one thing."
+  [schema]
+  (->> schema
+       (group-by :id)
+       (keep (fn [[id entities]]
+               (when (< 1 (count entities))
+                 {:id id
+                  :count (count entities)
+                  :types (into #{} (map entity-type) entities)
+                  :identical? (apply = entities)})))))
+
 (defn undescribed
   "Entities carrying no :description, as a seq of {:id ... :type ...}. Unlike
   `unknown-keys` and `dangling-references` a non-empty result is not an error,
@@ -180,6 +197,11 @@
   ;; Misspelled keys and broken cross-references.
   (unknown-keys (read-schema))
   (dangling-references (read-schema))
+
+  ;; Repeated ids, and just the ones that are actual collisions.
+  (duplicate-ids (read-schema))
+  (remove #(and (:identical? %) (= 1 (count (:types %))))
+          (duplicate-ids (read-schema)))
 
   ;; What still needs a description, and how much is left per type.
   (->> (read-schema)

@@ -1124,9 +1124,6 @@
       Latino. Ethnicity is recorded separately from race in the curation
       interface."
   :type :skos/Concept}
- {:id :cg/Unknown,
-  :description "No value was reported in the source publication."
-  :type :skos/Concept}
  {:id :cg/HispanicOrLatino,
   :description "The individual or cohort is reported as Hispanic or Latino.
       Ethnicity is recorded separately from race in the curation interface."
@@ -1135,7 +1132,7 @@
   :type :skos/Concept
   :description "The biological sex of the individual is ambiguous."}
  {:id :cg/Unknown,
-  :description "No value was reported in the source publication."
+  :description "The value is not known with the infomation available."
   :type :skos/Concept}
  {:id :cg/Other,
   :description "A value not covered by the other options in the set."
@@ -1356,9 +1353,6 @@
  {:id :cg/LinkageAnalysis,
   :type :skos/Concept
   :description "Statistical analysis of co-segregation between marker loci and phenotype across families; localizes a disease locus rather than identifying a causal variant."}
- {:id :cg/Other,
-  :description "A value not covered by the other options in the set."
-  :type :skos/Concept}
  {:id :cg/PCR,
   :type :skos/Concept
   :description "Targeted amplification of a genomic region; used on its own for sizing assays such as repeat expansions or deletion detection, and as a prerequisite step for most other targeted methods."}

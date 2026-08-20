@@ -28,7 +28,7 @@ One flat vector of 218 entity maps, each with an `:id` (a namespaced keyword: `c
 - `:rdfs/Class` — lists its attributes in **cardinality buckets** rather than as a single attribute list: `:oneOf` (exactly one), `:oneOrMoreOf`, `:zeroOrOneOf`, `:zeroOrMoreOf`, and `:attributes` (cardinality not yet decided). `:zeroOrManyOf` is a variant spelling of `:zeroOrMoreOf` that appears on two classes.
 - `:rdf/Property` — has a `:range` (a primitive like `:String`/`:Number`, or a class id), optionally a `:value-set` naming a collection, and optionally `:json-type` where the JSON serialization differs from the RDF one (resources degrade to strings).
 - `:skos/Collection` — a value set, with members in `:skos/member`.
-- `:skos/Concept` — a term. Concepts are repeated once per value set they belong to, so **`:id` is not unique across the vector** (nine concepts appear twice).
+- `:skos/Concept` — a term. Concepts are repeated once per value set they belong to, so **`:id` is not unique across the vector** (`:cg/Unknown` and `:cg/Other` each appear twice).
 
 The vector is entirely reference-based: classes name properties by keyword, properties name value sets by keyword, value sets name concepts by keyword. Nothing is nested, so an edit to one id must be matched at every reference site.
 
@@ -44,6 +44,8 @@ Because `s/keys` ignores keys it does not recognize, validity alone does not mea
 
 - `unknown-keys` — catches misspelled keys against the `known-keys` table. **Adding an optional key to a spec means adding it to `known-keys` too**, or the tool will report false positives.
 - `dangling-references` — catches references to ids the schema never defines.
+
+`duplicate-ids` also sits alongside them, reporting every repeated `:id` with its `:count`, the `:type`s claiming it, and whether the copies are `:identical?`. Repetition itself is expected, so this one is not required to be empty — an entry with `:identical? false` or more than one `:type` is the real error, since a reference to that id no longer names one thing.
 
 `undescribed` sits alongside them but is not a check: it lists entities still lacking a `:description`, so a non-empty result is remaining documentation work rather than an error. It collapses ids that appear more than once.
 
